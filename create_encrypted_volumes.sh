@@ -1,11 +1,8 @@
 #!/bin/bash
-
-#cat snapshots.txt
-echo "pls copy contents of snapshots.txt file to an accessible location."
-#prompts to confirms if file's been copied for easy access 
+#prompts to confirm that you're aware of action about to be executed 
 while true
 do
-    read -p "YOU ARE ABOUT TO CREATE ENCRYPTED VOLUMES. Type CONTINUE to proceed. (ALL CAPS) " continue
+    read -p "YOU ARE ABOUT TO CREATE ENCRYPTED VOLUMES. Type CONTINUE to proceed(ALL CAPS): " continue
     if [ "$continue" == "CONTINUE" ]
     then 
         break

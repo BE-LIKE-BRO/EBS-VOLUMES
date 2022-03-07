@@ -1,11 +1,10 @@
 #!/bin/bash
-cat volumes.txt
-#lists all volumes with their instance IDs
-echo "pls copy contents of text file to an accessible location."
+cat unencrypted_volumes.txt
+echo "pls copy contents of unencrypted_volumes.txt to an accessible location."
 #prompts to confirms if file's been copied for easy access 
 while true
 do
-    read -p "Type CONTINUE to continue. (ALL CAPS) " continue
+    read -p "Type CONTINUE to proceed to snapshot creation. (ALL CAPS) " continue
     if [ "$continue" == "CONTINUE" ]
     then 
         break
@@ -20,8 +19,8 @@ do
         read -p "input Instance id " instance_id
         aws ec2 create-snapshot --volume-id $volume_id --description $instance_id
         echo "snapshot created for $volume_id"
-        read -p "ready for the next one? " next
-        if [ "$next" == "n" ]
+        read -p "ready for the next one? Type 'NO' to end operation " next
+        if [ "$next" == "NO" ]
         then 
             break
         fi   

@@ -1,2 +1,6 @@
-1. Input "continue" in all caps to start snapshot creation process
-2. Snapshot Description is the instance id to attach new encrypted volume to
+EXECUTION PROCESS
+1. list_unencrypted_volumes_ids
+2. create_snapshots
+3. list_snapshots
+4. create_encrypted_volumes
+5. list_encrypted_volumes

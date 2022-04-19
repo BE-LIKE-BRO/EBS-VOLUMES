@@ -1,3 +1,5 @@
+# Incomplete Project to fully automate the encryption of EBS volumes already attached to instances 
+
 PREREQUISITES:
 1. Excel file with columns from left to right; EC2-instances, Unencrypted-volume-ID, Snapshot-ID, Encrypted-volumed-ID
    --- This is to allow for easy visualization and retrieval of details

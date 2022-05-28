@@ -1,8 +1,9 @@
 #!/bin/bash
-#prompts to confirm that you're aware of action about to be executed 
+
+#### This prompts to confirm that you're aware of action about to be executed 
 while true
 do
-    read -p "YOU ARE ABOUT TO CREATE SNAPSHOTS. Type CONTINUE to proceed(ALL CAPS): " continue
+    read -p "YOU ARE ABOUT TO CREATE SNAPSHOTS OF YOUR UNENCRYPTED VOLUMES. Type CONTINUE to proceed(ALL CAPS): " continue
     if [ "$continue" == "CONTINUE" ]
     then 
         break
@@ -10,19 +11,21 @@ do
         echo "please type 'CONTINUE' in ALL CAPS to proceed"
     fi  
 done
-#Create volume snapshots 
-while true
-do
-        read -p "input Volume id: " volume_id
-        read -p "input Instance id: " instance_id 
-        aws ec2 create-snapshot --volume-id $volume_id --description "$instance_id"
-        echo "SNAPSHOT CREATED FOR $volume_id"
-        read -p "ready for the next one? Type 'NO' to end operation " next
-        if [ "$next" == "NO" ]
-        then 
-            break
-        fi   
+
+
+
+#### This counts the number of volumes in the unencrypted_volumes.txt
+volume_count=$(sed -n '$=' TEXTFILES/unencrypted_volumes.txt)
+
+# variables to configure loop
+floor=0
+unencrypted_volumes_count=$volume_count
+
+
+#### This creates snapshots of each unencrypted volumes
+while [ $floor -lt $unencrypted_volumes_count ]
+do 
+    ((floor++))
+    for volume_ids in `sed -n ${floor}p TEXTFILES/unencrypted_volumes.txt`; do aws ec2 create-snapshot --volume-id "$volume_ids" ;done
+
 done
-
-
-

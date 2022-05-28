@@ -12,18 +12,23 @@ do
     fi  
 done
 
-#Detach Volumes 
-while true
-do
-        read -p "input volume ID: " volume_ID
-        aws ec2 detach-volume --volume-id $volume_ID
-        echo "Volume detached: $volume_ID"
-        read -p "ready for the next one? Type 'NO' to end operation " next
-        if [ "$next" == "NO" ]
-        then 
-            break
-        fi   
+
+#### This counts the number of volumes in the unencrypted_volumes.txt
+volume_count=$(sed -n '$=' TEXTFILES/unencrypted_volumes.txt)
+
+# variables to configure loop
+floor=0
+unencrypted_volumes_count=$volume_count
+
+
+#### This detaches unencrypted volumes from their respective instances
+while [ $floor -lt $unencrypted_volumes_count ]
+do 
+    ((floor++))
+    for volume_ids in `sed -n ${floor}p TEXTFILES/unencrypted_volumes.txt`; do aws ec2 detach-volume --volume-id $volume_ids ;done
+
 done
+
 
 
 

@@ -11,17 +11,28 @@ do
     fi  
 done
 
-#Shut down instances
-while true
-do
-        read -p "input Instance id: " instance_id
-        aws ec2 start-instances --instance-ids $instance_id
-        echo "instance started: $instance_id"
-        read -p "ready for the next one? Type 'NO' to end operation " next
-        if [ "$next" == "NO" ]
-        then 
-            break
-        fi   
+
+#### This counts the number of instances in instance_ids.txt
+inst_count=$(sed -n '$=' TEXTFILES/instance_ids.txt)
+
+
+#### variables to configure loop
+floor=0
+instance_count=$inst_count
+
+
+#### This starts up instances
+
+while [ $floor -lt $instance_count ]
+do 
+    ((floor++))
+    for instance_ids in `sed -n ${floor}p TEXTFILES/instance_ids.txt`; do aws ec2 start-instances --instance-ids $instance_ids ;done
+
 done
+
+#### Notifies Program completion on terminal
+echo "---------------------------------"
+echo "---------------------------------"
+echo "DONE! ALL INSTANCES STARTED"
 
 

@@ -12,19 +12,38 @@ do
     fi  
 done
 
-#Attach Volumes 
-while true
-do
-        read -p "input volume ID: " volume_ID
-        read -p "input instance ID: " instance_ID
-        aws ec2 attach-volume --volume-id $volume_ID --instance-id $instance_ID --device "//dev\xvda"          
-        echo "Volume attached: $volume_ID"
-        read -p "ready for the next one? Type 'NO' to end operation " next
-        if [ "$next" == "NO" ]
-        then 
-            break
-        fi   
+
+#### This counts the number of instances in instance_ids.txt
+inst_count=$(sed -n '$=' TEXTFILES/instance_ids.txt)
+
+
+# variables to configure loop
+floor=0
+instance_count=$inst_count
+
+
+while [ $floor -lt $instance_count ]
+do 
+    ((floor++))
+    instance_ids=$(sed -n ${floor}p TEXTFILES/instance_ids.txt)
+    volume_ids=$(sed -n ${floor}p TEXTFILES/ENCRYPTED_VOLUMES/encrypted_volumes.txt)
+
+#### MAIN COMMAND THAT ATTACHES VOLUME TO INSTANCE
+    aws ec2 attach-volume --volume-id $volume_ids --instance-id $instance_ids --device "//dev\xvda"
+
 done
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

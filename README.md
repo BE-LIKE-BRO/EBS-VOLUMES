@@ -2,6 +2,9 @@
 This is a bash script project which fully automates the entire process of encryptiong unencrypted volumes that are currently attached to a running ec2 instance. The automation steps/scripts were seperated to allow human validation and control of the workflow.
 The scripts are named same as the execution process for easy identification
 
+HOW IT WORKS
+These scripts work by automatically running the necessary aws cli command to execute the action, puttting the output data in a .txt file, then the proceeding script reads the data in the .txt file to execute its processes.
+
 PREREQUISITES:
 1. aws cli installed on computer
 2. aws user account with ec2 action privileges 
@@ -20,7 +23,7 @@ EXECUTION PROCESS
 
 
 POINTERS:
-1. PLS COMPLETELY FINISH ONE PHASE BEFORE MOVING ONTO THE NEXT TO MINIMIZE CHANCE OF ERROR
+1. PLS GIVE SOME TIME TO THE COMPLETION OF ONE PHASE BEFORE MOVING ONTO THE NEXT TO MINIMIZE CHANCE OF ERROR
 2. These are IDs you'll find in the following files
  - unencrypted_volumes.txt   ------- ec2 instance ID && attached unencrypted volume IDs
  - snapshots.txt  ------------------ snapshot ID && unecrypted volume ID
